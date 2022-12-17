@@ -1,0 +1,34 @@
+USE [LoginRegisterBase ]
+GO
+/****** Object:  StoredProcedure [dbo].[Register]    Script Date: 12/17/2022 7:55:26 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+ALTER PROCEDURE [dbo].[Register] --Burda procedureden istifade edirik--
+	@out int output, @fname varchar(64), @lname varchar(64), @username varchar(64), @email varchar(128), @pass varchar(128)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here
+	IF EXISTS(SELECT * FROM reglogin WHERE username=@username)
+	BEGIN
+	SET @out=1;
+	RETURN @out
+	END
+	ELSE
+	BEGIN
+	insert into reglogin (fname, lname, username, email, pass) values (@fname, @lname, @username, @email, @pass)
+	SET @out=0
+	return @out
+	END
+END
+
